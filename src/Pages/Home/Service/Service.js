@@ -17,6 +17,7 @@ const Service = ({service}) => {
             </Card.Text>
             </Card.Body>
             <Card.Footer>
+                
                 <LinkContainer to="/checkout">
             <Button variant="primary" size="lg">
                 Choose For You

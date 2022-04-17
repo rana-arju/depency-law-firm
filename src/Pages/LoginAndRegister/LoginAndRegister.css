@@ -42,6 +42,8 @@
 @media only screen and (max-width: 576px){
     .form-box{
     width: 100%;
-    
+}
+.social-media button{
+    margin: 10px;
 }
 }

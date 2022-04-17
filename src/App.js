@@ -9,6 +9,7 @@ import Checkout from './Pages/Checkout/Checkout';
 import Header from './Shared/Header/Header';
 import Footer from './Shared/Footer/Footer';
 import './App.css';
+import RequireAuth from './RequireAuth/RequireAuth';
 
 function App() {
   return (
@@ -21,7 +22,12 @@ function App() {
           <Route path='*' element ={<Error404 />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/checkout' element={<Checkout />} />
+          <Route path='/checkout' element={
+            <RequireAuth>
+                <Checkout />
+            </RequireAuth>
+          
+          } />
         </Routes>
         <Footer />
     </div>

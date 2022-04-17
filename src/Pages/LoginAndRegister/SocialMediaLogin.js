@@ -9,21 +9,25 @@ const SocialMediaLogin = () => {
     const navigate = useNavigate();
     const [signInWithGoogle, user, error] = useSignInWithGoogle(auth);
     const [signInWithGithub, githubUser, githubError] = useSignInWithGithub(auth);
-      const handleGoogleLogin = () => {
+  
+   let loginError;
+    if(error || githubError){
+        console.log(error.message);
+        loginError = <p className='text-danger'>Error: {error?.message} {githubError?.message}</p>
+    }
+    if (user || githubUser) {
+        navigate("/checkout");
+    }
+    const handleGoogleLogin = () => {
         signInWithGoogle();
     }
     const handleGithubLogin = () => {
         signInWithGithub();
     }
-    if (user || githubUser) {
-        navigate("/checkout");
-    }
-    let loginError;
-    if(error || githubError){
-        loginError = <p>{error} {githubError}</p>
-    }
+  
     return (
            <div className="social-media">
+               {loginError}
                 <Button variant="primary" size="lg" onClick={handleGoogleLogin}><span className='icon'><FcGoogle /></span>Google</Button>
                 <Button variant="primary" size="lg" onClick={handleGithubLogin}><span className='icon'><BsGithub /></span>Github</Button>
             </div>
