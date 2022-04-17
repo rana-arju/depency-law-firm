@@ -1,0 +1,47 @@
+.banner-section{
+    display: grid;
+    max-height: 500vh;
+    grid-template-columns: 2fr 3fr;
+    background-color: #B89161;
+    padding: 60px;
+}
+.banner-section .banner-left h1{
+    color: #fff;
+    font-size: 45px;
+    text-transform: capitalize;
+    font-weight: 600;
+    line-height: 1.3em;
+}
+.banner-section .banner-right img{
+    border-radius: 20px;
+    width: 100%;
+}
+.banner-btn{
+    margin-top: 30px;
+}
+/*================================
+    Responsive
+==================================*/
+@media only screen and (max-width: 992px) {
+
+    .banner-section .banner-left h1{
+    font-size: 40px;
+    margin-top: 20px;
+    font-weight: 600;
+
+}
+}
+
+@media only screen and (max-width: 576px) {
+    .banner-section{
+    grid-template-columns: 1fr;
+    padding: 20px;
+    }
+    .banner-left{
+        order: 1;
+    }
+    .banner-section .banner-left h1{
+    font-size: 30px;
+    margin-top: 20px;
+}
+}
