@@ -1,18 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { FcGoogle } from 'react-icons/fc';
-import { BsGithub } from 'react-icons/bs';
+import { Link, useNavigate } from 'react-router-dom';
+
 import "./LoginAndRegister.css";
+import { useSignInWithEmailAndPassword, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+import SocialMediaLogin from './SocialMediaLogin';
+
 const Login = () => {
+    const navigate = useNavigate();
+    const [signInWithGoogle, googleUser, googleError] = useSignInWithGoogle(auth);
+    const [signInWithGithub, githubUser, githubError] = useSignInWithGithub(auth);
+    const handleGoogleLogin = () => {
+        signInWithGoogle();
+    }
+    const handleGithubLogin = () => {
+        signInWithGithub();
+    }
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [
+        signInWithEmailAndPassword,
+        user,
+        error,
+        ] = useSignInWithEmailAndPassword(auth);
+    const handleEmailBlur = event => {
+        const email = event.target.value;
+        setEmail(email);
+    }
+    const handlePasswordBlur = event => {
+        const password = event.target.value;
+        setPassword(password);
+    }
+    if (user || googleUser || githubUser) {
+        navigate("/checkout");
+    }
+    let loginError;
+    if(error || googleError || githubError){
+        loginError = <p>{error} {googleError} {githubError}</p>
+    }
+    const handleLoginUser = event => {
+        event.preventDefault();
+        signInWithEmailAndPassword(email, password);
+    }
     return (
         <Container>
             <div  className='form-box'>
+                {loginError }
             <h2 className='text-center my-4 title'>Please Login</h2>
-            <Form>
+            <Form onSubmit={handleLoginUser}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
+                <Form.Control onBlur={handleEmailBlur} type="email" placeholder="Enter email" />
                 <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
                 </Form.Text>
@@ -20,7 +59,7 @@ const Login = () => {
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control onBlur={handlePasswordBlur} type="password" placeholder="Password" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 <p>New of Defency? <Link to="/register">Please Register</Link></p>
@@ -39,10 +78,7 @@ const Login = () => {
                 <p>or</p>
                 <div></div>
                 </div>
-              <div className="social-media">
-                <Button variant="primary" size="lg" ><span className='icon'><FcGoogle /></span>Github</Button>
-                <Button variant="primary" size="lg" ><span className='icon'><BsGithub /></span>Github</Button>
-            </div>
+            {<SocialMediaLogin />}
         </div>
         </Container>
     );
