@@ -19,10 +19,10 @@
       - [x] /Blog
       - [x] /Checkout
       - [x] /Home
-            - [x] /Banner
-            - [x] /Services
-            - [x] /Home
-            - [x] /Team
+        - [x] /Banner
+        - [x] /Services
+        - [x] /Home
+        - [x] /Team
     - [x] /RequireAuth
     - [x] /Shared
         - [x] /Footer
