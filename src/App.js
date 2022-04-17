@@ -6,20 +6,24 @@ import Error404 from './Pages/Error/Error404';
 import Login from './Pages/LoginAndRegister/Login';
 import Register from './Pages/LoginAndRegister/Register';
 import Checkout from './Pages/Checkout/Checkout';
+import Header from './Shared/Header/Header';
+import Footer from './Shared/Footer/Footer';
 import './App.css';
 
 function App() {
   return (
     <div>
+      <Header />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/blog' element={<Blog />} />
           <Route path='*' element ={<Error404 />} />
-          <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
           <Route path='/checkout' element={<Checkout />} />
         </Routes>
+        <Footer />
     </div>
   );
 }
