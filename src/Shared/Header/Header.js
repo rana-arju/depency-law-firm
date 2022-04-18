@@ -14,8 +14,8 @@ const Header = () => {
         signOut(auth);
     }
     return (
-        <div>
-            <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+        <div className="top-sticky">
+            <Navbar  collapseOnSelect expand="lg" bg="primary" variant="dark" >
             <Container>
             <LinkContainer to='/'>
                 <Navbar.Brand href="#home"><img className='logo' src={logo} alt="" /></Navbar.Brand>

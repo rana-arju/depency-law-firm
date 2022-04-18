@@ -16,14 +16,16 @@ const Register = () => {
     const [
     createUserWithEmailAndPassword,
     user,
+    loading,
    error
    
     ] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification: true});
-    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+    const [updateProfile] = useUpdateProfile(auth);
     let regError;
     if(error){
         regError = error.message
     }
+
     if (user) {
         navigate("/checkout");
     }
@@ -51,7 +53,7 @@ const Register = () => {
     return (
           <Container>
             <div  className='form-box'>
-               <p>{regError}</p>
+               <p style={{color: "red"}}>{regError}</p>
             <h2 className='text-center my-4 title'>Please Register</h2>
             <Form onSubmit={handleCreateUser}>
             <Form.Group className="mb-3" controlId="formBasicEmail">

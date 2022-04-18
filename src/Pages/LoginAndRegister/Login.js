@@ -14,10 +14,11 @@ const Login = () => {
     const from = location.state?.from?.pathname || '/';
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [sendPasswordResetEmail,  resetError] = useSendPasswordResetEmail(auth);
+    const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(auth);
     const [
         signInWithEmailAndPassword,
         user,
+        loading,
         error
         ] = useSignInWithEmailAndPassword(auth);
     const handleEmailBlur = event => {
@@ -30,7 +31,7 @@ const Login = () => {
     }
     let loginError;
     if(error || resetError){
-        loginError = <p>{error?.message} {resetError?.message}</p>
+        loginError = <p style={{color: "red"}}>{error?.message} {resetError?.message}</p>
     }
     if (user) {
         navigate(from, {replace: true});
@@ -52,8 +53,8 @@ const Login = () => {
     return (
         <Container>
             <div  className='form-box'>
-                {loginError}
             <h2 className='text-center my-4 title'>Please Login</h2>
+             {loginError}
             <Form onSubmit={handleLoginUser}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
