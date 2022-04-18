@@ -8,7 +8,7 @@ const Team = ({member}) => {
     <div>
         <Card className="team-style">
             <Card.Img variant="top" src={img} className="team-img" />
-            <Card.Header className="team-git add .icon"><BsFacebook /><BsTwitter /><BsLinkedin /> </Card.Header>
+            <Card.Header className="team-icon"><BsFacebook /><BsTwitter /><BsLinkedin /> </Card.Header>
             <Card.Body>
             <Card.Title>{name}</Card.Title>
             <Card.Text>

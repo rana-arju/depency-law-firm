@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import "./LoginAndRegister.css";
 import SocialMediaLogin from './SocialMediaLogin';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [displayName, setDisplayName] = useState('');
+
     const navigate = useNavigate();
     const [
     createUserWithEmailAndPassword,
     user,
    error
    
-    ] = useCreateUserWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification: true});
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     let regError;
     if(error){
         regError = error.message
@@ -33,9 +37,16 @@ const Register = () => {
         setPassword(password);
         
     }
-    const handleCreateUser = event => {
+    const handleName = (event) => {
+        const displayName = event.target.value;
+        setDisplayName(displayName);
+        
+    }
+    const handleCreateUser = async(event) => {
         event.preventDefault();
-        createUserWithEmailAndPassword(email, password);
+        await createUserWithEmailAndPassword(email, password);
+        await updateProfile({ displayName});
+        toast('Updated profile');
     }
     return (
           <Container>
@@ -45,7 +56,7 @@ const Register = () => {
             <Form onSubmit={handleCreateUser}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Your Full Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter Full Name" required />
+                <Form.Control onBlur={handleName} type="text" placeholder="Enter Full Name" required />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
@@ -75,6 +86,7 @@ const Register = () => {
                 </div>
                 {<SocialMediaLogin />}
         </div>
+        <ToastContainer />
         </Container>
     );
 };
