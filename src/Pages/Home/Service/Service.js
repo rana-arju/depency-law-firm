@@ -7,7 +7,6 @@ const Service = ({service}) => {
     const {name, description, img} = service;
     return (
         <div>
-    
         <Card className="card-style">
             <Card.Img variant="top" src={img} className="card-img" />
             <Card.Body>

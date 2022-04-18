@@ -7,7 +7,6 @@ import "./LoginAndRegister.css";
 import { useSignInWithEmailAndPassword, useSendPasswordResetEmail} from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import SocialMediaLogin from './SocialMediaLogin';
-import Loading from '../../Shared/Loading/Loading';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -19,8 +18,7 @@ const Login = () => {
     const [
         signInWithEmailAndPassword,
         user,
-        error,
-        loading
+        error
         ] = useSignInWithEmailAndPassword(auth);
     const handleEmailBlur = event => {
         const email = event.target.value;
@@ -30,16 +28,12 @@ const Login = () => {
         const password = event.target.value;
         setPassword(password);
     }
-
-    if (loading) {
-        return <Loading />
-    }
-    if (user) {
-        navigate(from, {replace: true});
-    }
     let loginError;
     if(error || resetError){
         loginError = <p>{error?.message} {resetError?.message}</p>
+    }
+    if (user) {
+        navigate(from, {replace: true});
     }
     const handleLoginUser = event => {
         event.preventDefault();
@@ -58,7 +52,7 @@ const Login = () => {
     return (
         <Container>
             <div  className='form-box'>
-                {loginError }
+                {loginError}
             <h2 className='text-center my-4 title'>Please Login</h2>
             <Form onSubmit={handleLoginUser}>
             <Form.Group className="mb-3" controlId="formBasicEmail">

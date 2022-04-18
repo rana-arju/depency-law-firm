@@ -12,8 +12,7 @@ const SocialMediaLogin = () => {
   
    let loginError;
     if(error || githubError){
-        console.log(error.message);
-        loginError = <p className='text-danger'>Error: {error?.message} {githubError?.message}</p>
+        loginError = <p className='text-danger'>{error?.message} {githubError?.message}</p>
     }
     if (user || githubUser) {
         navigate("/checkout");
@@ -24,7 +23,6 @@ const SocialMediaLogin = () => {
     const handleGithubLogin = () => {
         signInWithGithub();
     }
-  
     return (
            <div className="social-media">
                {loginError}

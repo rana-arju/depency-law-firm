@@ -5,7 +5,6 @@ import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import "./LoginAndRegister.css";
 import SocialMediaLogin from './SocialMediaLogin';
-import Loading from '../../Shared/Loading/Loading';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -14,19 +13,17 @@ const Register = () => {
     const [
     createUserWithEmailAndPassword,
     user,
-    error,
-    loading
+   error
+   
     ] = useCreateUserWithEmailAndPassword(auth);
-    if (loading) {
-        return <Loading />
+    let regError;
+    if(error){
+        regError = error.message
     }
     if (user) {
         navigate("/checkout");
     }
-    let regError;
-    if(error){
-        regError = <p>{error.message}</p>
-    }
+  
     const handleEmail = (event) => {
         const email = event.target.value;
         setEmail(email);
@@ -34,6 +31,7 @@ const Register = () => {
     const handlePassword = (event) => {
         const password = event.target.value;
         setPassword(password);
+        
     }
     const handleCreateUser = event => {
         event.preventDefault();
@@ -42,7 +40,7 @@ const Register = () => {
     return (
           <Container>
             <div  className='form-box'>
-               { regError}
+               <p>{regError}</p>
             <h2 className='text-center my-4 title'>Please Register</h2>
             <Form onSubmit={handleCreateUser}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
