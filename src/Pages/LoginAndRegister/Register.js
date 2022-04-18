@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import "./LoginAndRegister.css";
@@ -8,28 +8,26 @@ import SocialMediaLogin from './SocialMediaLogin';
 import { ToastContainer, toast } from 'react-toastify';
 
 const Register = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [displayName, setDisplayName] = useState('');
-
-    const navigate = useNavigate();
     const [
     createUserWithEmailAndPassword,
     user,
     loading,
-   error
-   
+    error
     ] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification: true});
     const [updateProfile] = useUpdateProfile(auth);
     let regError;
     if(error){
         regError = error.message
     }
-
     if (user) {
-        navigate("/checkout");
+        navigate(from, {replace: true});
     }
-  
     const handleEmail = (event) => {
         const email = event.target.value;
         setEmail(email);
@@ -37,12 +35,10 @@ const Register = () => {
     const handlePassword = (event) => {
         const password = event.target.value;
         setPassword(password);
-        
     }
     const handleName = (event) => {
         const displayName = event.target.value;
         setDisplayName(displayName);
-        
     }
     const handleCreateUser = async(event) => {
         event.preventDefault();

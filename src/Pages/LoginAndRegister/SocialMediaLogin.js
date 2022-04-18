@@ -3,10 +3,12 @@ import { Button } from 'react-bootstrap';
 import { useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { FcGoogle } from 'react-icons/fc';
 import { BsGithub } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 const SocialMediaLogin = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
     const [signInWithGoogle, user,googleLoading, error] = useSignInWithGoogle(auth);
     const [signInWithGithub,githubUser, githubLoading, githubError] = useSignInWithGithub(auth);
   
@@ -15,7 +17,7 @@ const SocialMediaLogin = () => {
         loginError = <p className='text-danger'>{error?.message} {githubError?.message}</p>
     }
     if (user || githubUser) {
-        navigate("/checkout");
+        navigate(from, {replace: true});
     }
     const handleGoogleLogin = () => {
         signInWithGoogle();

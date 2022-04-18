@@ -41,7 +41,6 @@ const Login = () => {
         signInWithEmailAndPassword(email, password);
     }
     const resetPassword = async() => {
-       
         if (email) {
         await sendPasswordResetEmail(email);
           toast('Check Your email');
