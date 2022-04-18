@@ -1,3 +1,26 @@
 .about-container{
-    display: block;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.about-right img{
+    width: 100%;
+}
+.about-left p{
+    font-size: 18px;
+    text-transform: capitalize;
+    font-weight: 500;
+    line-height: 1.5em;
+    
+}
+@media only screen and (max-width: 600px) {
+    .about-container{
+    grid-template-columns:  1fr;
+}
+.about-right{
+    order: -1;
+}
+.about-left p{
+    font-size: 16px;
+}
 }
